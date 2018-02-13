@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-12 principal">
+    <div class="col-lg-5 col-md-5 col-sm-5 col-5 busqueda">
+      <div class="formulario">
+        <h1>Tic Tac Toe</h1>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12 formulario_busqueda">
+            <form (keypress)="accederEnter($event)">
+              <h3>Enter a nickname and access our chat or our game</h3>
+              <input [(ngModel)]="usuario" type="text" name="user" placeholder="Usuario"/>
+              <div *ngIf="mensajeError" class="errorUser">{{mensajeError}}</div>
+              <div *ngIf="usuario">
+                <h3>Select an avatar</h3>
+                <div class="row">
+                  <img class="col-md-2 col-sm-5 col-10 offset-1 imguser active"
+                       [ngClass]="{'active': imagenseleccionada==1}" (click)="seleccionarImagen(1)"
+                       src="assets/user1.png"/>
+                  <img class="col-md-2 col-sm-5 col-10  offset-md-0 offset-sm-0 offset-1 imguser"
+                       [ngClass]="{'active': imagenseleccionada==2}" (click)="seleccionarImagen(2)"
+                       src="assets/user2.png"/>
+                  <img class="col-md-2 col-sm-5 col-10 offset-md-0 offset-sm-1 offset-1 imguser"
+                       [ngClass]="{'active': imagenseleccionada==3}" (click)="seleccionarImagen(3)"
+                       src="assets/user3.png"/>
+                  <img class="col-md-2 col-sm-5 col-10  offset-md-0 offset-sm-0 offset-1 imguser"
+                       [ngClass]="{'active': imagenseleccionada==4}" (click)="seleccionarImagen(4)"
+                       src="assets/user4.png"/>
+                  <img class="col-md-2 col-sm-6 col-10 offset-sm-3 offset-md-0 offset-1 imguser"
+                       [ngClass]="{'active': imagenseleccionada==5}" (click)="seleccionarImagen(5)"
+                       src="assets/user5.png"/>
+                </div>
+              </div>
+            </form>
+            <button type="submit" (click)="acceder()" class="envio">Log in</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

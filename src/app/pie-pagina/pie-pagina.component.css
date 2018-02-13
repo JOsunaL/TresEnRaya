@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Anton');
+.foot{
+  background-color: #292929;
+  color: #FFFFFF;
+}
+.menu-img{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+.redes{
+  text-align: right;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.menu-img:hover{
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  background-color: #090909;
+}
+.identificador{
+  padding-left: 50px;
+}
+.enlace{
+  color: white;
+  font-weight: bold;
+}
+.enlace:hover{
+  font-style: italic;
+}
+.espacio{
+  height: 7px;
+}
+.fondo_blanco{
+  background-color: #FFFFFF;
+}

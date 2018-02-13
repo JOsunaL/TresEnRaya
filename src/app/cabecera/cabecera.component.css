@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+
+.head {
+  background-color: #292929;
+  color: #FFFFFF;
+}
+
+.titulo {
+  font-size: 50px;
+  font-family: 'Audiowide', cursive;
+  font-style: oblique;
+  font-weight: bold;
+  text-align: center;
+}
+.imguser{
+  height: 30px;
+}
+
+.boton {
+  background-color: #090909;
+}

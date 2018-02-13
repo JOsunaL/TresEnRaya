@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+
+div {
+  margin: 0px;
+  padding: 0px;
+}
+
+h3 {
+  margin: 15px;
+  margin-bottom: 5px;
+}
+
+.principal {
+  text-align: center;
+  height: 600px;
+}
+
+.busqueda {
+  height: inherit;
+  display: inline-block;
+}
+
+.formulario {
+  display: table-cell;
+  vertical-align: middle;
+  height: inherit;
+}
+
+.formulario_busqueda {
+  height: auto;
+  padding-top: 10px;
+  width: inherit;
+  display: block;
+  background-color: dimgrey;
+  border-radius: 15px;
+}
+
+.formulario_busqueda form {
+  display: block;
+}
+
+.formulario_busqueda form input {
+  border-style: none;
+  width: 95%;
+  height: 40px;
+  opacity: 0.8;
+  border-radius: 20px 20px 20px 20px;
+  padding-left: 15px;
+}
+
+.formulario_busqueda form input:focus {
+  outline: none;
+}
+
+.formulario_busqueda button {
+  background-color: black;
+  -webkit-transition: background 0.5s linear;
+  margin-top: 10px;
+  color: #fff;
+  width: 100%;
+  border: none;
+  border-radius: 0px 0px 15px 15px;
+}
+
+.formulario_busqueda button:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  font-size: 60px;
+  font-family: 'Audiowide';
+  font-style: oblique;
+  font-weight: bold;
+  color: white;
+}
+
+.envio {
+  height: 40px;
+}
+
+.imguser{
+  height: 70px;
+  margin-bottom: 10px;
+  background-color: black;
+  border: solid 1px white;
+}
+.imguser:hover{
+  opacity: 0.5;
+}
+.active{
+  border: solid 2px yellow !important;
+}
+.errorUser{
+  color: white;
+  font-weight: bold;
+  margin-top: 15px;
+}

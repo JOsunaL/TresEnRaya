@@ -1,0 +1,2 @@
+[0212/102908.475:ERROR:file_io_win.cc(161)] CreateFile C:\Users\JUAN\AppData\Local\Google\Chrome\User Data\Crashpad\settings.dat: Error (0x3AFC) while retrieving error. (0x718)
+[0212/102915.003:ERROR:process_info.cc(396)] NtQuerySystemInformation SystemExtendedHandleInformation: No hay recursos de sistema suficientes para completar la llamada a la API.  (0xc000009a)
