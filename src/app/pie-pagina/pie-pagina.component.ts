@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ServicioServService} from "../servicio-serv.service";
 
 @Component({
   selector: 'app-pie-pagina',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PiePaginaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private servicioServService: ServicioServService) { }
 
   ngOnInit() {
   }

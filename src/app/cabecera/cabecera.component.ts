@@ -8,14 +8,18 @@ import {ServicioServService} from "../servicio-serv.service";
   styleUrls: ['./cabecera.component.css']
 })
 export class CabeceraComponent implements OnInit {
-  public imagen;
-  public nickname;
 
-  constructor(private servicioServService: ServicioServService) { }
+  constructor(private servicioServService: ServicioServService, private router: Router) { }
 
   ngOnInit() {
-    this.imagen = this.servicioServService.imagen;
-    this.nickname = this.servicioServService.nickname;
   }
 
+  anadirConectado(){
+    this.servicioServService.anadirjugadores();
+    this.ir();
+  }
+
+  ir() {
+    this.router.navigate([`../juego`]);
+  }
 }

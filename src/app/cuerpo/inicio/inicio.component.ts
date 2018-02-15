@@ -7,11 +7,15 @@ import {ServicioServService} from "../../servicio-serv.service";
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
+  public username;
+  public userimage;
 
   constructor(private servicioServService: ServicioServService) { }
 
   ngOnInit() {
     this.servicioServService.conectado = true;
+    this.userimage = this.servicioServService.imagen;
+    this.username = this.servicioServService.nickname;
   }
 
 }

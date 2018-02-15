@@ -10,5 +10,5 @@ export class AppComponent {
   title = 'app';
   message: string;
 
-  constructor( private servicioServService: ServicioServService) {}
+  constructor( public servicioServService: ServicioServService) {}
 }

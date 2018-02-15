@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   public usuario;
   public conjunto;
   public imagenseleccionada = 1;
-  public mensajeError;
+  public mensajeError = false;
 
 
   constructor(private servicioServService: ServicioServService, private router: Router) {
@@ -22,8 +22,6 @@ export class LoginComponent implements OnInit {
     this.servicioServService.verificaUsuario$.subscribe((mensaje) => {
       this.mensajeError = mensaje;
       if (mensaje.endsWith("se ha conectado")) {
-        this.servicioServService.nickname = this.conjunto[0];
-        this.servicioServService.imagen = this.conjunto[1];
         this.router.navigate(['/inicioUsuario']);
       }
     })
@@ -31,19 +29,19 @@ export class LoginComponent implements OnInit {
 
   cogerImagen() {
     if (this.imagenseleccionada == 1) {
-      return "assets/user1.png";
+      return "../../../assets/user1.png";
     }
     if (this.imagenseleccionada == 2) {
-      return "assets/user2.png";
+      return "../../../assets/user2.png";
     }
     if (this.imagenseleccionada == 3) {
-      return "assets/user3.png";
+      return "../../../assets/user3.png";
     }
     if (this.imagenseleccionada == 4) {
-      return "assets/user4.png";
+      return "../../../assets/user4.png";
     }
     if (this.imagenseleccionada == 5) {
-      return "assets/user5.png";
+      return "../../../assets/user5.png";
     }
   }
 

@@ -1,0 +1,14 @@
+h1 {
+  font-size: 60px;
+  font-family: 'Audiowide';
+  font-style: oblique;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-top: 170px;
+  margin-bottom: 170px;
+  background-color: black;
+  border: 3px solid white;
+  border-radius: 15px;
+  padding: 30px;
+}

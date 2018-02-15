@@ -1,14 +1,12 @@
-<div class="container-fluid">
+<div *ngIf="servicioServService.conectado" class="container-fluid">
   <div class="row head">
     <div class="col-12">
-      <div class="row" [routerLink]="['home']">
+      <div class="row" [routerLink]="['/home']">
         <div class="col-12 titulo">TIC TAC TOE</div>
       </div>
-      <div class="row">
-        <div class="col-1"><img src="{{imagen}}"/></div>
-        <div class="col-1">{{nickname}}</div>
-        <div class="col-5 boton">dsadsdh</div>
-        <div class="col-5 boton">dasdsaj</div>
+      <div class="row" *ngIf="servicioServService.nickname">
+        <div class="col-6 boton" (click)="anadirConectado()">Play Now</div>
+        <div class="col-6 boton" [routerLink]="['/chatGlobal']">Global chat</div>
       </div>
     </div>
   </div>
