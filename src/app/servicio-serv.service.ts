@@ -13,6 +13,10 @@ export class ServicioServService {
   public comenzar$ = this.comenzar.asObservable();
   public contrincante = new Subject<any>();
   public contrincante$ = this.contrincante.asObservable();
+  public vacia = new Subject<any>();
+  public vacia$ = this.vacia.asObservable();
+  public cambio = new Subject<any>();
+  public cambio$ = this.cambio.asObservable();
   public imagen;
   public nickname;
 
@@ -26,7 +30,13 @@ export class ServicioServService {
     });
     this.socket.on('recibir usuario', (usuario) => {
       this.contrincante.next(usuario);
-    })
+    });
+    this.socket.on('casilla vacia', (consulta) =>{
+      this.vacia.next(consulta);
+    });
+    this.socket.on('cambiar tablero', (tablero) =>{
+      this.cambio.next(tablero);
+    });
   }
 
   public newuser(usuario) {
@@ -42,5 +52,8 @@ export class ServicioServService {
   }
   public pedir_usuarios(){
     this.socket.emit('pedir usuarios', "");
+  }
+  public seleccionaC(posicionC){
+    this.socket.emit('cambia casilla', posicionC)
   }
 }

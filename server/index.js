@@ -9,11 +9,11 @@ let io = socketIO(server);
 userconnect = [];
 usuarios_en_juego = [];
 tablero = [0, 0, 0, 0, 0, 0, 0, 0];
+puntUsuarios = [0, 0];
 
 const port = process.env.PORT || 3000;
 
 io.on('connection', function (socket) {
-
 
   socket.on('add user', function (user) {
     encontrado = userconnect.indexOf(user[0]);
@@ -45,6 +45,22 @@ io.on('connection', function (socket) {
       if (usuarios_en_juego[x] != socket.usuario) {
         socket.emit('recibir usuario', usuarios_en_juego[x])
       }
+    }
+  });
+  socket.on('cambia casilla', function (posicion){
+    if (tablero[posicion] === 0) {
+      posicionU = usuarios_en_juego.indexOf(socket.usuario);
+      if (posicionU === 0) {
+        tablero[posicion] = "x";
+        io.emit('cambiar casilla', tablero);
+      }
+      if (posicionU === 1) {
+        tablero[posicion] = "o";
+        io.emit('cambiar tablero', tablero);
+      }
+      socket.emit('casilla vacia', false);
+    } else {
+      socket.emit('casilla vacia', true);
     }
   })
 
