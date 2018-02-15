@@ -17,9 +17,9 @@ io.on('connection', function (socket) {
 
   socket.on('add user', function (user) {
     encontrado = userconnect.indexOf(user[0]);
-    if(userconnect.length === 2){
+    if (userconnect.length === 2) {
       socket.emit('conectar', "Error! At this moment there are already 2 users connected, try it later")
-    }else if (user[0] === null) {
+    } else if (user[0] === null) {
       socket.emit('conectar', "Error! You must write a nickname");
     } else if (encontrado >= 0) {
       socket.emit('conectar', "Error! The nickname '" + user[0] + "' already exists");
@@ -30,19 +30,22 @@ io.on('connection', function (socket) {
     }
   });
   socket.on('iniciar juego', function () {
-    if(usuarios_en_juego.length === 2){
+    if (usuarios_en_juego.length === 2) {
       io.emit('preparar juego', true)
-    }else{
+    } else {
       io.emit('preparar juego', false)
     }
   });
-  socket.on('sumar jugador', function(nada){
+  socket.on('sumar jugador', function (nada) {
     usuarios_en_juego.push(socket.usuario);
     socket.emit('actualizar lista', usuarios_en_juego)
   });
-
-  socket.on('escoge casilla', function (posicion) {
-
+  socket.on('pedir usuarios', function (nada) {
+    for (let x in usuarios_en_juego) {
+      if (usuarios_en_juego[x] != socket.usuario) {
+        socket.emit('recibir usuario', usuarios_en_juego[x])
+      }
+    }
   })
 
 

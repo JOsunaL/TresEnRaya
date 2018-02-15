@@ -3,11 +3,11 @@
     <div class="offset-2 col-8">
       <div class="text-center">
         <img *ngIf="username" class="imagen" src="{{userimage}}"/>
-        <h1 *ngIf="username">Welcome "{{username}}" select where you want to go</h1>
+        <h1 class="sobresale" *ngIf="username">Welcome "{{username}}" select where you want to go</h1>
         <h1 *ngIf="!username">Sorry! You are not registered, return to the homepage to register</h1>
       </div>
       <div class="col-12">
-        <h1 *ngIf="!username" [routerLink]="['/home']" id="salir"> Clic para registrarte</h1>
+        <h1 *ngIf="!username" [routerLink]="['/home']" id="salir"> Clic to register</h1>
       </div>
     </div>
   </div>

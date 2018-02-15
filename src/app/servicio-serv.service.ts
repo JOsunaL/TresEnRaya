@@ -11,6 +11,8 @@ export class ServicioServService {
   public verificaUsuario$ = this.verificaUsuario.asObservable();
   public comenzar = new Subject<any>();
   public comenzar$ = this.comenzar.asObservable();
+  public contrincante = new Subject<any>();
+  public contrincante$ = this.contrincante.asObservable();
   public imagen;
   public nickname;
 
@@ -21,6 +23,9 @@ export class ServicioServService {
     });
     this.socket.on('preparar juego', (pase) => {
       this.comenzar.next(pase);
+    });
+    this.socket.on('recibir usuario', (usuario) => {
+      this.contrincante.next(usuario);
     })
   }
 
@@ -33,6 +38,9 @@ export class ServicioServService {
     this.socket.emit('iniciar juego', "");
   };
   public anadirjugadores(){
-    this.socket.emit('sumar jugador', "")
+    this.socket.emit('sumar jugador', "");
+  }
+  public pedir_usuarios(){
+    this.socket.emit('pedir usuarios', "");
   }
 }
