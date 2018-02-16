@@ -11,6 +11,8 @@ usuarios_en_juego = [];
 tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 puntUsuarios = [0, 0];
 turno = 0;
+gana = "";
+conjMensaje = [];
 
 const port = process.env.PORT || 3000;
 
@@ -37,24 +39,24 @@ io.on('connection', function (socket) {
       io.emit('preparar juego', false)
     }
   });
-  socket.on('sumar jugador', function (nada) {
+  socket.on('sumar jugador', function () {
     usuarios_en_juego.push(socket.usuario);
   });
-  socket.on('pedir usuarios', function (nada) {
+  socket.on('pedir usuarios', function () {
     for (let x in usuarios_en_juego) {
       if (usuarios_en_juego[x] !== socket.usuario) {
         socket.emit('recibir usuario', usuarios_en_juego[x])
       }
     }
   });
-  socket.on('pedir puntosP', function (nada) {
+  socket.on('pedir puntosP', function () {
     if (socket.usuario === usuarios_en_juego[1]) {
       socket.emit('devuelvo puntosP', puntUsuarios[1])
     } else if (socket.usuario === usuarios_en_juego[0]) {
       socket.emit('devuelvo puntosP', puntUsuarios[0])
     }
   });
-  socket.on('pedir puntosC', function (nada) {
+  socket.on('pedir puntosC', function () {
     if (socket.usuario !== usuarios_en_juego[1]) {
       socket.emit('devuelvo puntosC', puntUsuarios[1])
     } else if (socket.usuario !== usuarios_en_juego[0]) {
@@ -137,9 +139,38 @@ io.on('connection', function (socket) {
     io.emit('cambiar tablero', tablero);
     io.emit('ganador anterior', usuarios_en_juego[posicionU]);
     if (puntUsuarios[posicionU] === 3) {
+      gana = usuarios_en_juego[posicionU];
       socket.emit('ganador', usuarios_en_juego[posicionU])
     }
   }
+  socket.on('disconnect', function () {
+    for(let x in userconnect){
+      if (socket.usuario === userconnect[x]){
+        userconnect.splice(x, 1);
+      }
+    }
+    for(let x in usuarios_en_juego){
+      if (socket.usuario === usuarios_en_juego[x]){
+        usuarios_en_juego.splice(x, 1);
+        console.log(usuarios_en_juego);
+        socket.broadcast.emit('userdesconectado');
+        puntUsuarios = [0, 0];
+        io.emit('usuario desconectado', socket.usuario)
+      }
+    }
+  });
+  socket.on('escribiendo', function(){
+    socket.broadcast.emit('estaescribiendo', socket.usuario + "esta escribiendo...")
+  });
+  socket.on('enviar', function(texto){
+    d = new Date();
+    h = d.getHours();
+    m = d.getMinutes();
+    hora = h + ":" + m;
+    conjMensaje = [socket.usuario,texto,hora];
+    socket.emit('mensajeP', conjMensaje);
+    socket.broadcast.emit('mensajeO', conjMensaje);
+  })
 
 
 });

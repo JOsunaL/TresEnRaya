@@ -27,6 +27,10 @@ export class ServicioServService {
   public ultimoG$ = this.ultimoG.asObservable();
   public ganador = new Subject<any>();
   public ganador$ = this.ganador.asObservable();
+  public desconectado = new Subject<any>();
+  public desconectado$ = this.desconectado.asObservable();
+  public escribe = new Subject<any>();
+  public escribe$ = this.escribe.asObservable();
   public imagen;
   public nickname;
 
@@ -64,7 +68,21 @@ export class ServicioServService {
     this.socket.on('ganador', (nombreganador) =>{
       this.ganador.next(nombreganador);
     });
+    this.socket.on('usuario desconectado', (nombreusuario) =>{
+      this.desconectado.next(nombreusuario);
+    });
+    this.socket.on('userdesconectado', () =>{
+      this.socket.emit('iniciar juego');
+    });
+    this.socket.on('estaescribiendo', (mensaje) =>{
+      this.escribe.next(mensaje);
+    });
+    this.socket.on('mensajeP', (listaP) =>{
 
+    });
+    this.socket.on('mensajeO', (listaO) =>{
+
+    });
   }
 
   public newuser(usuario) {
@@ -74,15 +92,15 @@ export class ServicioServService {
   };
 
   public comenzarJ() {
-    this.socket.emit('iniciar juego', "");
+    this.socket.emit('iniciar juego');
   };
 
   public anadirjugadores() {
-    this.socket.emit('sumar jugador', "");
+    this.socket.emit('sumar jugador');
   }
 
   public pedir_usuarios() {
-    this.socket.emit('pedir usuarios', "");
+    this.socket.emit('pedir usuarios');
   }
 
   public seleccionaC(posicionC) {
@@ -90,10 +108,16 @@ export class ServicioServService {
   }
 
   public puntos_propios() {
-    this.socket.emit('pedir puntosP', "")
+    this.socket.emit('pedir puntosP')
   }
 
   public puntos_contrincante() {
-    this.socket.emit('pedir puntosC', "")
+    this.socket.emit('pedir puntosC')
+  }
+  public escribiendo(){
+    this.socket.emit('escribiendo')
+  }
+  public envio(texto){
+    this.socket.emit('enviar', texto)
   }
 }
