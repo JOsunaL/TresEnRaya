@@ -8,8 +8,9 @@ let socketIO = require('socket.io');
 let io = socketIO(server);
 userconnect = [];
 usuarios_en_juego = [];
-tablero = [0, 0, 0, 0, 0, 0, 0, 0];
+tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 puntUsuarios = [0, 0];
+turno = 0;
 
 const port = process.env.PORT || 3000;
 
@@ -38,31 +39,106 @@ io.on('connection', function (socket) {
   });
   socket.on('sumar jugador', function (nada) {
     usuarios_en_juego.push(socket.usuario);
-    socket.emit('actualizar lista', usuarios_en_juego)
   });
   socket.on('pedir usuarios', function (nada) {
     for (let x in usuarios_en_juego) {
-      if (usuarios_en_juego[x] != socket.usuario) {
+      if (usuarios_en_juego[x] !== socket.usuario) {
         socket.emit('recibir usuario', usuarios_en_juego[x])
       }
     }
   });
-  socket.on('cambia casilla', function (posicion){
-    if (tablero[posicion] === 0) {
-      posicionU = usuarios_en_juego.indexOf(socket.usuario);
-      if (posicionU === 0) {
-        tablero[posicion] = "x";
-        io.emit('cambiar casilla', tablero);
-      }
-      if (posicionU === 1) {
-        tablero[posicion] = "o";
-        io.emit('cambiar tablero', tablero);
-      }
-      socket.emit('casilla vacia', false);
-    } else {
-      socket.emit('casilla vacia', true);
+  socket.on('pedir puntosP', function (nada) {
+    if (socket.usuario === usuarios_en_juego[1]) {
+      socket.emit('devuelvo puntosP', puntUsuarios[1])
+    } else if (socket.usuario === usuarios_en_juego[0]) {
+      socket.emit('devuelvo puntosP', puntUsuarios[0])
     }
-  })
+  });
+  socket.on('pedir puntosC', function (nada) {
+    if (socket.usuario !== usuarios_en_juego[1]) {
+      socket.emit('devuelvo puntosC', puntUsuarios[1])
+    } else if (socket.usuario !== usuarios_en_juego[0]) {
+      socket.emit('devuelvo puntosC', puntUsuarios[0])
+    }
+  });
+  socket.on('cambia casilla', function (posicion) {
+    if (usuarios_en_juego[turno] === socket.usuario) {
+      if (tablero[posicion] === 0) {
+        posicionU = usuarios_en_juego.indexOf(socket.usuario);
+        if (posicionU === 0) {
+          tablero[posicion] = "x";
+          io.emit('cambiar tablero', tablero);
+          ganador();
+          if (turno === 0) {
+            turno = 1;
+          } else if (turno === 1) {
+            turno = 0;
+          }
+        }
+        if (posicionU === 1) {
+          tablero[posicion] = "o";
+          io.emit('cambiar tablero', tablero);
+          ganador();
+          if (turno === 0) {
+            turno = 1;
+          } else if (turno === 1) {
+            turno = 0;
+          }
+        }
+        socket.emit('casilla vacia', false);
+      } else {
+        socket.emit('casilla vacia', true);
+      }
+      io.emit('turno', false);
+    } else if (usuarios_en_juego[turno] !== socket.usuario) {
+      socket.emit('turno', true);
+    }
+  });
+
+  function ganador() {
+    console.log(tablero);
+    if ((tablero[0] === tablero[1] === tablero[2] && tablero[0] !== 0) || ((tablero[0] === tablero[4] === tablero[8] && tablero[0] !== 0)) || (tablero[0] === tablero[3] === tablero[6]  && tablero[0] !== 0)) {
+      console.log("Supuestamente he ganado desde 0");
+      if (tablero[0] === 'x') {
+        console.log("ha ganado x");
+        comprobarG(0);
+      }
+      if (tablero[0] === 'o') {
+        console.log("ha ganado o");
+        comprobarG(1);
+      }
+    }
+    if ((tablero[8] === tablero[7] === tablero[6]  && tablero[8] !== 0) || (tablero[8] === tablero[5] === tablero[2] && tablero[8] !== 0)) {
+      console.log("Supuestamente he ganado desde 8");
+      if (tablero[8] === 'x') {
+        console.log("ha ganado x");
+        comprobarG(0);
+      }
+      if (tablero[8] === 'o') {
+        console.log("ha ganado o");
+        comprobarG(1);
+      }
+    }
+    if ((tablero[2] === tablero[4] === tablero[6] && tablero[4] !== 0) || (tablero[1] === tablero[4] === tablero[7] && tablero[4] !== 0)){
+      console.log("Supuestamente he ganado desde 4");
+      if (tablero[4] === 'x') {
+        console.log("ha ganado x");
+        comprobarG(0);
+      }
+      if (tablero[4] === 'o') {
+        console.log("ha ganado o");
+        comprobarG(1);
+      }
+    }
+  }
+  function comprobarG(posicionU) {
+    puntUsuarios[posicionU]++;
+    tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    io.emit('cambiar tablero', tablero);
+    if (puntUsuarios[posicionU] === 3) {
+      socket.emit('ganador', usuarios_en_juego[posicionU])
+    }
+  }
 
 
 });
@@ -70,5 +146,3 @@ io.on('connection', function (socket) {
 server.listen(port, function () {
   console.log(`started on port: ${port}`);
 });
-
-

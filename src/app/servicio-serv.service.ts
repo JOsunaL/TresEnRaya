@@ -17,6 +17,12 @@ export class ServicioServService {
   public vacia$ = this.vacia.asObservable();
   public cambio = new Subject<any>();
   public cambio$ = this.cambio.asObservable();
+  public turno = new Subject<any>();
+  public turno$ = this.turno.asObservable();
+  public puntosP = new Subject<any>();
+  public puntosP$ = this.puntosP.asObservable();
+  public puntosC = new Subject<any>();
+  public puntosC$ = this.puntosC.asObservable();
   public imagen;
   public nickname;
 
@@ -31,12 +37,25 @@ export class ServicioServService {
     this.socket.on('recibir usuario', (usuario) => {
       this.contrincante.next(usuario);
     });
-    this.socket.on('casilla vacia', (consulta) =>{
+    this.socket.on('casilla vacia', (consulta) => {
       this.vacia.next(consulta);
     });
-    this.socket.on('cambiar tablero', (tablero) =>{
+    this.socket.on('cambiar tablero', (tablero) => {
+      this.socket.emit('pedir puntosP', "");
+      this.socket.emit('pedir puntosC', "");
       this.cambio.next(tablero);
     });
+    this.socket.on('turno', (puerta) => {
+      this.turno.next(puerta);
+    });
+    this.socket.on('devuelvo puntosP', (puntos) => {
+      this.puntosP.next(puntos);
+    });
+    this.socket.on('devuelvo puntosC', (puntos) => {
+      this.puntosC.next(puntos);
+    });
+
+
   }
 
   public newuser(usuario) {
@@ -44,16 +63,28 @@ export class ServicioServService {
     this.imagen = usuario[1];
     this.socket.emit('add user', usuario);
   };
-  public comenzarJ(){
+
+  public comenzarJ() {
     this.socket.emit('iniciar juego', "");
   };
-  public anadirjugadores(){
+
+  public anadirjugadores() {
     this.socket.emit('sumar jugador', "");
   }
-  public pedir_usuarios(){
+
+  public pedir_usuarios() {
     this.socket.emit('pedir usuarios', "");
   }
-  public seleccionaC(posicionC){
+
+  public seleccionaC(posicionC) {
     this.socket.emit('cambia casilla', posicionC)
+  }
+
+  public puntos_propios() {
+    this.socket.emit('pedir puntosP', "")
+  }
+
+  public puntos_contrincante() {
+    this.socket.emit('pedir puntosC', "")
   }
 }
