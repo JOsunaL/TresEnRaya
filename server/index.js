@@ -97,44 +97,45 @@ io.on('connection', function (socket) {
 
   function ganador() {
     console.log(tablero);
-    if ((tablero[0] === tablero[1] === tablero[2] && tablero[0] !== 0) || ((tablero[0] === tablero[4] === tablero[8] && tablero[0] !== 0)) || (tablero[0] === tablero[3] === tablero[6]  && tablero[0] !== 0)) {
-      console.log("Supuestamente he ganado desde 0");
+    if (((tablero[0] === tablero[1] && tablero[1] === tablero[2]) ||
+        (tablero[0] === tablero[4] && tablero[4] === tablero[8]) ||
+        (tablero[0] === tablero[3] && tablero[3] === tablero[6])) &&
+      tablero[0] !== 0) {
       if (tablero[0] === 'x') {
-        console.log("ha ganado x");
         comprobarG(0);
       }
       if (tablero[0] === 'o') {
-        console.log("ha ganado o");
         comprobarG(1);
       }
     }
-    if ((tablero[8] === tablero[7] === tablero[6]  && tablero[8] !== 0) || (tablero[8] === tablero[5] === tablero[2] && tablero[8] !== 0)) {
-      console.log("Supuestamente he ganado desde 8");
+    if (((tablero[8] === tablero[7] && tablero[7] === tablero[6]) ||
+        (tablero[8] === tablero[5] && tablero[5] === tablero[2])) &&
+      tablero[0] !== 0) {
       if (tablero[8] === 'x') {
-        console.log("ha ganado x");
         comprobarG(0);
       }
       if (tablero[8] === 'o') {
-        console.log("ha ganado o");
         comprobarG(1);
       }
     }
-    if ((tablero[2] === tablero[4] === tablero[6] && tablero[4] !== 0) || (tablero[1] === tablero[4] === tablero[7] && tablero[4] !== 0)){
-      console.log("Supuestamente he ganado desde 4");
+    if (((tablero[4] === tablero[3] && tablero[3] === tablero[5]) ||
+        (tablero[4] === tablero[1] && tablero[1] === tablero[7]) ||
+        (tablero[4] === tablero[2] && tablero[2] === tablero[6])) &&
+      tablero[0] !== 0) {
       if (tablero[4] === 'x') {
-        console.log("ha ganado x");
         comprobarG(0);
       }
       if (tablero[4] === 'o') {
-        console.log("ha ganado o");
         comprobarG(1);
       }
     }
   }
+
   function comprobarG(posicionU) {
     puntUsuarios[posicionU]++;
     tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     io.emit('cambiar tablero', tablero);
+    io.emit('ganador anterior', usuarios_en_juego[posicionU]);
     if (puntUsuarios[posicionU] === 3) {
       socket.emit('ganador', usuarios_en_juego[posicionU])
     }

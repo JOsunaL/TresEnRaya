@@ -13,6 +13,7 @@ import { ErrorComponent } from './cuerpo/error/error.component';
 import { InicioComponent } from './cuerpo/inicio/inicio.component';
 import { ChatComponent } from './cuerpo/chat/chat.component';
 import { JuegoComponent } from './cuerpo/juego/juego.component';
+import { GanadorComponent } from './cuerpo/ganador/ganador.component';
 
 const routes: Routes = [
   {path: 'home', component: LoginComponent},
@@ -33,7 +34,8 @@ const routes: Routes = [
     ErrorComponent,
     InicioComponent,
     ChatComponent,
-    JuegoComponent
+    JuegoComponent,
+    GanadorComponent
   ],
   imports: [
     BrowserModule,

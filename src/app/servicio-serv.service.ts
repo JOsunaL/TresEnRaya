@@ -23,6 +23,10 @@ export class ServicioServService {
   public puntosP$ = this.puntosP.asObservable();
   public puntosC = new Subject<any>();
   public puntosC$ = this.puntosC.asObservable();
+  public ultimoG = new Subject<any>();
+  public ultimoG$ = this.ultimoG.asObservable();
+  public ganador = new Subject<any>();
+  public ganador$ = this.ganador.asObservable();
   public imagen;
   public nickname;
 
@@ -54,7 +58,12 @@ export class ServicioServService {
     this.socket.on('devuelvo puntosC', (puntos) => {
       this.puntosC.next(puntos);
     });
-
+    this.socket.on('ganador anterior', (nombreganador) =>{
+      this.ultimoG.next(nombreganador);
+    });
+    this.socket.on('ganador', (nombreganador) =>{
+      this.ganador.next(nombreganador);
+    });
 
   }
 
