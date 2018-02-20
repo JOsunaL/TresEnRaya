@@ -22,4 +22,14 @@ export class CabeceraComponent implements OnInit {
   ir() {
     this.router.navigate([`../juego`]);
   }
+  irachat(){
+    this.servicioServService.quitajugador();
+    this.irchat();
+  }
+  irchat(){
+    this.router.navigate([`../chatGlobal`]);
+  }
+  desconectar(){
+    this.servicioServService.desconectar();
+  }
 }

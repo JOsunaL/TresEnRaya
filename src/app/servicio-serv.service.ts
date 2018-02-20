@@ -29,12 +29,19 @@ export class ServicioServService {
   public ganador$ = this.ganador.asObservable();
   public desconectado = new Subject<any>();
   public desconectado$ = this.desconectado.asObservable();
-  public escribe = new Subject<any>();
-  public escribe$ = this.escribe.asObservable();
+  public empate = new Subject<any>();
+  public empate$ = this.empate.asObservable();
+  public mensajeP = new Subject<any>();
+  public mensajeP$ = this.mensajeP.asObservable();
+  public mensajeO = new Subject<any>();
+  public mensajeO$ = this.mensajeO.asObservable();
   public imagen;
   public nickname;
 
   constructor() {
+    this.inicio();
+  }
+  inicio(){
     this.socket = io(this.url);
     this.socket.on('conectar', (mensaje) => {
       this.verificaUsuario.next(mensaje);
@@ -74,15 +81,15 @@ export class ServicioServService {
     this.socket.on('userdesconectado', () =>{
       this.socket.emit('iniciar juego');
     });
-    this.socket.on('estaescribiendo', (mensaje) =>{
-      this.escribe.next(mensaje);
-    });
     this.socket.on('mensajeP', (listaP) =>{
 
     });
     this.socket.on('mensajeO', (listaO) =>{
 
     });
+    this.socket.on('empate', (mensaje) =>{
+      this.empate.next(mensaje);
+    })
   }
 
   public newuser(usuario) {
@@ -90,6 +97,10 @@ export class ServicioServService {
     this.imagen = usuario[1];
     this.socket.emit('add user', usuario);
   };
+
+  public quitajugador(){
+    this.socket.emit('quitar jugador');
+  }
 
   public comenzarJ() {
     this.socket.emit('iniciar juego');
@@ -114,10 +125,11 @@ export class ServicioServService {
   public puntos_contrincante() {
     this.socket.emit('pedir puntosC')
   }
-  public escribiendo(){
-    this.socket.emit('escribiendo')
-  }
   public envio(texto){
     this.socket.emit('enviar', texto)
+  }
+  public desconectar(){
+    this.socket.close();
+    this.inicio();
   }
 }

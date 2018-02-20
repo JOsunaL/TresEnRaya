@@ -42,6 +42,17 @@ io.on('connection', function (socket) {
   socket.on('sumar jugador', function () {
     usuarios_en_juego.push(socket.usuario);
   });
+
+  socket.on('quitar jugador', function () {
+    for (let x in usuarios_en_juego) {
+      if (socket.usuario === usuarios_en_juego[x]) {
+        usuarios_en_juego.splice(x, 1);
+        socket.broadcast.emit('userdesconectado');
+        puntUsuarios = [0, 0];
+      }
+    }
+  });
+
   socket.on('pedir usuarios', function () {
     for (let x in usuarios_en_juego) {
       if (usuarios_en_juego[x] !== socket.usuario) {
@@ -98,7 +109,6 @@ io.on('connection', function (socket) {
   });
 
   function ganador() {
-    console.log(tablero);
     if (((tablero[0] === tablero[1] && tablero[1] === tablero[2]) ||
         (tablero[0] === tablero[4] && tablero[4] === tablero[8]) ||
         (tablero[0] === tablero[3] && tablero[3] === tablero[6])) &&
@@ -131,6 +141,11 @@ io.on('connection', function (socket) {
         comprobarG(1);
       }
     }
+    if (tablero[0] !== 0 && tablero[1] !== 0 && tablero[2] !== 0 && tablero[3] !== 0 && tablero[4] !== 0 && tablero[5] !== 0 && tablero[6] !== 0 && tablero[7] !== 0 && tablero[8] !== 0 && tablero[9] !== 0) {
+      tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+      io.emit('cambiar tablero', tablero);
+      io.emit('empate', "It was draw");
+    }
   }
 
   function comprobarG(posicionU) {
@@ -143,31 +158,30 @@ io.on('connection', function (socket) {
       socket.emit('ganador', usuarios_en_juego[posicionU])
     }
   }
+
   socket.on('disconnect', function () {
-    for(let x in userconnect){
-      if (socket.usuario === userconnect[x]){
+    for (let x in userconnect) {
+      if (socket.usuario === userconnect[x]) {
         userconnect.splice(x, 1);
       }
     }
-    for(let x in usuarios_en_juego){
-      if (socket.usuario === usuarios_en_juego[x]){
+    for (let x in usuarios_en_juego) {
+      if (socket.usuario === usuarios_en_juego[x]) {
         usuarios_en_juego.splice(x, 1);
-        console.log(usuarios_en_juego);
+        tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        io.emit('cambiar tablero', tablero);
         socket.broadcast.emit('userdesconectado');
         puntUsuarios = [0, 0];
         io.emit('usuario desconectado', socket.usuario)
       }
     }
   });
-  socket.on('escribiendo', function(){
-    socket.broadcast.emit('estaescribiendo', socket.usuario + "esta escribiendo...")
-  });
-  socket.on('enviar', function(texto){
+  socket.on('enviar', function (texto) {
     d = new Date();
     h = d.getHours();
     m = d.getMinutes();
     hora = h + ":" + m;
-    conjMensaje = [socket.usuario,texto,hora];
+    conjMensaje = [socket.usuario, texto, hora];
     socket.emit('mensajeP', conjMensaje);
     socket.broadcast.emit('mensajeO', conjMensaje);
   })
