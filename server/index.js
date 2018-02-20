@@ -179,15 +179,26 @@ io.on('connection', function (socket) {
     }
   });
   socket.on('enviar', function (texto) {
-    d = new Date();
-    h = d.getHours();
-    m = d.getMinutes();
-    hora = h + ":" + m;
-    conjMensajeP = [socket.usuario, socket.imagen, texto, hora, false];
-    conjMensajeO = [socket.usuario, socket.imagen, texto, hora, true];
-    socket.emit('mensajeP', conjMensajeP);
-    socket.broadcast.emit('mensajeO', conjMensajeO);
-  })
+    if (texto === null) {
+      socket.emit('mensaje vacio', true)
+    } else {
+      d = new Date();
+      h = d.getHours();
+      m = d.getMinutes();
+      if (m < 10) {
+        m = "0" + m;
+      }
+      if (h < 10) {
+        h = "0" + h;
+      }
+      hora = h + ":" + m;
+      conjMensajeP = [socket.usuario, socket.imagen, texto, hora, false];
+      conjMensajeO = [socket.usuario, socket.imagen, texto, hora, true];
+      socket.emit('mensajeP', conjMensajeP);
+      socket.emit('mensaje vacio', false);
+      socket.broadcast.emit('mensajeO', conjMensajeO);
+    }
+  });
 
 
 });

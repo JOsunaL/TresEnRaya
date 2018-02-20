@@ -35,6 +35,8 @@ export class ServicioServService {
   public mensajeP$ = this.mensajeP.asObservable();
   public mensajeO = new Subject<any>();
   public mensajeO$ = this.mensajeO.asObservable();
+  public mensajevacio = new Subject<any>();
+  public mensajevacio$ = this.mensajevacio.asObservable();
   public imagen;
   public nickname;
 
@@ -90,6 +92,9 @@ export class ServicioServService {
     });
     this.socket.on('empate', (mensaje) => {
       this.empate.next(mensaje);
+    });
+    this.socket.on('mensaje vacio', (resultado) => {
+      this.mensajevacio.next(resultado);
     })
   }
 
