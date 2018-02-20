@@ -41,7 +41,8 @@ export class ServicioServService {
   constructor() {
     this.inicio();
   }
-  inicio(){
+
+  inicio() {
     this.socket = io(this.url);
     this.socket.on('conectar', (mensaje) => {
       this.verificaUsuario.next(mensaje);
@@ -69,25 +70,25 @@ export class ServicioServService {
     this.socket.on('devuelvo puntosC', (puntos) => {
       this.puntosC.next(puntos);
     });
-    this.socket.on('ganador anterior', (nombreganador) =>{
+    this.socket.on('ganador anterior', (nombreganador) => {
       this.ultimoG.next(nombreganador);
     });
-    this.socket.on('ganador', (nombreganador) =>{
+    this.socket.on('ganador', (nombreganador) => {
       this.ganador.next(nombreganador);
     });
-    this.socket.on('usuario desconectado', (nombreusuario) =>{
+    this.socket.on('usuario desconectado', (nombreusuario) => {
       this.desconectado.next(nombreusuario);
     });
-    this.socket.on('userdesconectado', () =>{
+    this.socket.on('userdesconectado', () => {
       this.socket.emit('iniciar juego');
     });
-    this.socket.on('mensajeP', (listaP) =>{
-
+    this.socket.on('mensajeP', (listaP) => {
+      this.mensajeP.next(listaP);
     });
-    this.socket.on('mensajeO', (listaO) =>{
-
+    this.socket.on('mensajeO', (listaO) => {
+      this.mensajeO.next(listaO);
     });
-    this.socket.on('empate', (mensaje) =>{
+    this.socket.on('empate', (mensaje) => {
       this.empate.next(mensaje);
     })
   }
@@ -98,7 +99,7 @@ export class ServicioServService {
     this.socket.emit('add user', usuario);
   };
 
-  public quitajugador(){
+  public quitajugador() {
     this.socket.emit('quitar jugador');
   }
 
@@ -125,10 +126,12 @@ export class ServicioServService {
   public puntos_contrincante() {
     this.socket.emit('pedir puntosC')
   }
-  public envio(texto){
+
+  public envio(texto) {
     this.socket.emit('enviar', texto)
   }
-  public desconectar(){
+
+  public desconectar() {
     this.socket.close();
     this.inicio();
   }

@@ -12,7 +12,8 @@ tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 puntUsuarios = [0, 0];
 turno = 0;
 gana = "";
-conjMensaje = [];
+conjMensajeP = [];
+conjMensajeO = [];
 
 const port = process.env.PORT || 3000;
 
@@ -28,6 +29,7 @@ io.on('connection', function (socket) {
       socket.emit('conectar', "Error! The nickname '" + user[0] + "' already exists");
     } else {
       userconnect.push(user[0]);
+      socket.imagen = user[1];
       socket.usuario = user[0];
       socket.emit('conectar', user[0] + " se ha conectado");
     }
@@ -181,9 +183,10 @@ io.on('connection', function (socket) {
     h = d.getHours();
     m = d.getMinutes();
     hora = h + ":" + m;
-    conjMensaje = [socket.usuario, texto, hora];
-    socket.emit('mensajeP', conjMensaje);
-    socket.broadcast.emit('mensajeO', conjMensaje);
+    conjMensajeP = [socket.usuario, socket.imagen, texto, hora, false];
+    conjMensajeO = [socket.usuario, socket.imagen, texto, hora, true];
+    socket.emit('mensajeP', conjMensajeP);
+    socket.broadcast.emit('mensajeO', conjMensajeO);
   })
 
 
