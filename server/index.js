@@ -3,6 +3,7 @@ let app = express();
 
 let http = require('http');
 let server = http.Server(app);
+const publicPath = path.join(__dirname, './public');
 
 let socketIO = require('socket.io');
 let io = socketIO(server);

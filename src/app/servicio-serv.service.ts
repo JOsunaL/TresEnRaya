@@ -4,7 +4,7 @@ import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class ServicioServService {
-  private url = 'http://localhost:3000';
+  private url = '';
   private socket;
   public conectado = false;
   public verificaUsuario = new Subject<any>();
