@@ -39,7 +39,7 @@ io.on('connection', function (socket) {
     }
   });
   socket.on('iniciar juego', function () {
-    if (usuarios_en_juego.length === 2) {
+    if (usuarios_en_juego.length >= 2) {
       io.emit('preparar juego', true)
     } else {
       io.emit('preparar juego', false)
@@ -169,12 +169,12 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     for (let x in userconnect) {
       if (socket.usuario === userconnect[x]) {
-        userconnect.splice(x, 1);
+        userconnect = userconnect.splice(x, 1);
       }
     }
     for (let x in usuarios_en_juego) {
       if (socket.usuario === usuarios_en_juego[x]) {
-        usuarios_en_juego.splice(x, 1);
+        usuarios_en_juego = usuarios_en_juego.splice(x, 1);
         tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         io.emit('cambiar tablero', tablero);
         socket.broadcast.emit('userdesconectado');
