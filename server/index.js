@@ -161,7 +161,7 @@ io.on('connection', function (socket) {
     io.emit('ganador anterior', usuarios_en_juego[posicionU]);
     if (puntUsuarios[posicionU] === 3) {
       gana = usuarios_en_juego[posicionU];
-      socket.emit('ganador', usuarios_en_juego[posicionU])
+      io.emit('ganador', usuarios_en_juego[posicionU])
     }
   }
 
