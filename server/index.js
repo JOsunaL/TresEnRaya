@@ -40,6 +40,8 @@ io.on('connection', function (socket) {
   });
   socket.on('iniciar juego', function () {
     if (usuarios_en_juego.length >= 2) {
+      puntUsuarios = [0, 0];
+      tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
       io.emit('preparar juego', true)
     } else {
       io.emit('preparar juego', false)
@@ -163,6 +165,8 @@ io.on('connection', function (socket) {
       gana = usuarios_en_juego[posicionU];
       io.emit('ganador', usuarios_en_juego[posicionU]);
       usuarios_en_juego = [];
+      puntUsuarios = [0, 0];
+      tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     }
   }
 
