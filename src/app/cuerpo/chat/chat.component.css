@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+
+.container {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  overflow-wrap: break-word;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.chat {
+  margin-top: 30px;
+  background-color: #090909;
+  border: solid 2px white;
+  height: 450px;
+  overflow: auto;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+.container p.right {
+  float: right;
+  margin-left: 20px;
+  margin-right: 0;
+}
+
+#blanco {
+  color: white;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+.margen {
+  margin-top: 10px;
+}
+
+.estiloInfo {
+  color: white;
+  font-size: 15px;
+}
+
+h1 {
+  font-size: 30px;
+  font-family: 'Audiowide';
+  font-style: oblique;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+#salir:hover {
+  color: #880000;
+}
+
+@media (min-width: 576px) {
+  h1 {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  h1 {
+    font-size: 60px;
+  }
+}
+
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 60px;
+  }
+}

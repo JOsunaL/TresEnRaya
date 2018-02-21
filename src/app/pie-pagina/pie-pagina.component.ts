@@ -8,7 +8,7 @@ import {ServicioServService} from "../servicio-serv.service";
 })
 export class PiePaginaComponent implements OnInit {
 
-  constructor(private servicioServService: ServicioServService) { }
+  constructor(public servicioServService: ServicioServService) { }
 
   ngOnInit() {
   }

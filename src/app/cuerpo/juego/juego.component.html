@@ -1,0 +1,102 @@
+<div class="container-fluid" *ngIf="!ganador">
+  <div class="row" *ngIf="username && comienzo===true">
+    <div class="offset-2 col-8 text-center">
+      <h1>Play Now!</h1>
+      <h2 *ngIf="turno === true">It's not your turn</h2>
+      <h2 *ngIf="casillaVacia === true">You must select an empty box</h2>
+      <h2 *ngIf="marcarEmpate">{{marcarEmpate}}!</h2>
+      <div class="row">
+        <div class="col-12 col-lg-3">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="sobresale">Your points:<br>{{pointsPropios}}</h2>
+              <h2 *ngIf="ganador_anterior || marcarEmpate" class="sobresale">Winner of the last round:<br>{{ganador_anterior || marcarEmpate}}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div (click)="cambio(0)" class="col-4 casillas">
+              <img *ngIf="tablero[0]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[0]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(1)" class="col-4 casillas">
+              <img *ngIf="tablero[1]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[1]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(2)" class="col-4 casillas">
+              <img *ngIf="tablero[2]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[2]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+          </div>
+          <div class="row">
+            <div (click)="cambio(3)" class="col-4 casillas">
+              <img *ngIf="tablero[3]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[3]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(4)" class="col-4 casillas">
+              <img *ngIf="tablero[4]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[4]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(5)" class="col-4 casillas">
+              <img *ngIf="tablero[5]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[5]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+          </div>
+          <div class="row">
+            <div (click)="cambio(6)" class="col-4 casillas">
+              <img *ngIf="tablero[6]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[6]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(7)" class="col-4 casillas">
+              <img *ngIf="tablero[7]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[7]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+            <div (click)="cambio(8)" class="col-4 casillas">
+              <img *ngIf="tablero[8]==='x'" class="img-fluid" src="../../../assets/x.png"/>
+              <img *ngIf="tablero[8]==='o'" class="img-fluid" src="../../../assets/o.png"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-3">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="sobresale">Opponent:<br>{{rival}}</h2>
+              <h2 class="sobresale">Opponent's Points:<br>{{pointsRival}}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="offset-2 col-8">
+        <div class="text-center">
+          <h1 *ngIf="username && !comienzo">Waiting more players...</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="offset-2 col-8">
+        <div class="text-center">
+          <h1 *ngIf="!username">Sorry! You are not registered, return to the homepage to register</h1>
+        </div>
+        <div class="col-12">
+          <h1 *ngIf="!username" [routerLink]="['/home']" id="salir"> Clic to register</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="ganador || desconectado" [routerLink]="['/inicioUsuario']">
+  <div class="row">
+    <div class="offset-2 col-8 text-center">
+      <h1 *ngIf="ganador">The winner is {{ganador}}. Go home and play more</h1>
+      <h2 *ngIf="desconectado">The opponent '{{desconectado}}' disconnected. Go home to restart new game</h2>
+    </div>
+  </div>
+</div>

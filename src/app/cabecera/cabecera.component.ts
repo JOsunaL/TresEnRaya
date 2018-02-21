@@ -9,7 +9,7 @@ import {ServicioServService} from "../servicio-serv.service";
 })
 export class CabeceraComponent implements OnInit {
 
-  constructor(private servicioServService: ServicioServService, private router: Router) { }
+  constructor(public servicioServService: ServicioServService, private router: Router) { }
 
   ngOnInit() {
   }

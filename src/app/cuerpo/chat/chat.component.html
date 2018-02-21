@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="col-12">
+    <div class="offset-2 col-8">
+      <div class="text-center">
+        <h1 *ngIf="!username">Sorry! You are not registered, return to the homepage to register</h1>
+      </div>
+      <div class="col-12">
+        <h1 *ngIf="!username" [routerLink]="['/home']" id="salir"> Clic to register</h1>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="username">
+      <div class="row">
+        <div class="col-8 offset-2 chat" id="chat">
+          <div *ngFor="let mensaje of arraymensajes">
+            <div *ngIf="!mensaje[4]" class="container darker">
+              <img src="{{mensaje[1]}}" alt="Avatar" class="right">
+              <p class="right"><b>Tu:</b><br>{{mensaje[2]}}</p>
+              <span class="time-left">{{mensaje[3]}}</span>
+            </div>
+            <div  *ngIf="mensaje[4]" class="container">
+              <img src="{{mensaje[1]}}" alt="Avatar">
+              <p><b>{{mensaje[0]}}:</b><br>{{mensaje[2]}}</p>
+              <span class="time-right">{{mensaje[3]}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 offset-2 margen text-center">
+          <div class="estiloInfo">
+            <div *ngIf="escribiendo">{{escribiendo}}</div>
+            <div *ngIf="errorEscrito">{{errorEscrito}}</div>
+          </div>
+          <input [(ngModel)]="texto" (keypress)="enviar($event)" size="100%"
+                 placeholder="Escribe algo para enviar a los demas jugadores" type="text" class="bg-dark"/>
+          <div *ngIf="mensajevacio" id="blanco" class="text-center">You must write a text!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
