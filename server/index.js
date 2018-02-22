@@ -160,7 +160,7 @@ io.on('connection', function (socket) {
     tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     io.emit('cambiar tablero', tablero);
     io.emit('ganador anterior', usuarios_en_juego[posicionU]);
-    if (puntUsuarios[posicionU] === 3) {
+    if (puntUsuarios[posicionU] === 3){
       io.emit('ganador', usuarios_en_juego[posicionU]);
       usuarios_en_juego = [];
       puntUsuarios = [0, 0];
@@ -198,7 +198,7 @@ io.on('connection', function (socket) {
       if (h < 10) {
         h = "0" + h;
       }
-      hora = h + ":" + m;
+      hora= h + ":" + m;
       conjMensajeP = [socket.usuario, socket.imagen, texto, hora, false];
       conjMensajeO = [socket.usuario, socket.imagen, texto, hora, true];
       socket.emit('mensajeP', conjMensajeP);
