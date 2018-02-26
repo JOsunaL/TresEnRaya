@@ -11,7 +11,6 @@ app.get('*', function (req, res) {
 
 let socketIO = require('socket.io');
 let io = socketIO(server);
-
 userconnect = [];
 usuarios_en_juego = [];
 tablero = [0, 0, 0, 0, 0, 0, 0, 0, 0];
